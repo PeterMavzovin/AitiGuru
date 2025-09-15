@@ -17,7 +17,7 @@
 | id          | PK     | Первичный ключ                           |
 | name        | string | Название товара                          |
 | quantity    | int    | Количество                               |
-| price       | float  | Цена                                     |
+| price       | NUMERIC(10, 2)  | Цена                                     |
 | category_id | FK     | Внешний ключ на category.id              |
 
 ### 1.3. Клиенты (`client`)
@@ -44,4 +44,4 @@
 | order_id   | FK     | Внешний ключ на order.id        |
 | product_id | FK     | Внешний ключ на product.id      |
 | quantity   | int    | Количество                      |
-| price      | float  | Цена                            |
+| price      | NUMERIC(10, 2)  | Цена                            |
