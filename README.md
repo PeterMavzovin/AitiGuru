@@ -51,7 +51,7 @@
 ## SQL запросы
 
 ### 2.1
-```
+```sql
 SELECT
     c.name AS client_name,
     SUM(oi.quantity * oi.price) AS total_sum
