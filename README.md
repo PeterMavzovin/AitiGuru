@@ -1,4 +1,4 @@
-1. Даталогическая схема данных (реляционная модель)
+## Даталогическая схема данных (реляционная модель)
 
 Таблицы:
 
@@ -45,3 +45,22 @@
 | product_id | FK     | Внешний ключ на product.id      |
 | quantity   | INTEGER    | Количество                      |
 | price      | NUMERIC(10, 2)  | Цена                            |
+
+
+
+## SQL запросы
+
+### 2.1
+```
+SELECT
+    c.name AS client_name,
+    SUM(oi.quantity * oi.price) AS total_sum
+FROM
+    client c
+JOIN
+    "order" o ON o.client_id = c.id
+JOIN
+    order_item oi ON oi.order_id = o.id
+GROUP BY
+    c.id, c.name;
+```
