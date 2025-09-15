@@ -64,3 +64,50 @@ JOIN
 GROUP BY
     c.id, c.name;
 ```
+
+### 2.2
+```sql
+SELECT
+    parent.id AS category_id,
+    parent.name AS category_name,
+    COUNT(child.id) AS children_count
+FROM
+    category parent
+LEFT JOIN
+    category child ON child.parent_id = parent.id
+GROUP BY
+    parent.id, parent.name;
+```
+
+### 2.3
+### 2.3.1
+```sql
+CREATE OR REPLACE VIEW top5_products_last_month AS
+SELECT
+    p.name AS product_name,
+    c1.name AS category_lvl1,
+    SUM(oi.quantity) AS total_quantity
+FROM
+    order_item oi
+JOIN
+    product p ON p.id = oi.product_id
+JOIN
+    category c ON c.id = p.category_id
+LEFT JOIN
+    category c1 ON (
+        c1.id = c.id AND c1.parent_id IS NULL
+    )
+LEFT JOIN
+    category c2 ON c2.id = c.parent_id
+WHERE
+    oi.order_id IN (
+        SELECT id FROM "order"
+        WHERE order_date >= (CURRENT_DATE - INTERVAL '1 month')
+    )
+GROUP BY
+    p.id, p.name, c1.name
+ORDER BY
+    total_quantity DESC
+LIMIT 5;
+```
+
